@@ -1,8 +1,18 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
+=======
+>>>>>>> 5699990acb3b807b93684ef6563ad824764e8747
 """
 author:Wenquan Yang
 time:2020/6/12 22:30
 intro: 文件系统
 """
+<<<<<<< HEAD
+>>>>>>> remotes/origin/li
+=======
+>>>>>>> 5699990acb3b807b93684ef6563ad824764e8747
 import os
 import getpass
 import pickle
@@ -10,7 +20,14 @@ from config import *
 from utils import form_serializer
 from utils import split_serializer
 from utils import check_auth
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 from utils import logo
+>>>>>>> remotes/origin/li
+=======
+from utils import logo
+>>>>>>> 5699990acb3b807b93684ef6563ad824764e8747
 from utils import color
 from models import SuperBlock
 from models import INode
@@ -133,7 +150,15 @@ class FileSystem:
         return new_inode.i_no
 
     def _init_root_user(self):
+<<<<<<< HEAD
+<<<<<<< HEAD
+        print(color("系统初始状态,创建root用户请设置密码:", "33", "40"))
+=======
         print("系统初始状态,创建root用户请设置密码:")
+>>>>>>> remotes/origin/li
+=======
+        print("系统初始状态,创建root用户请设置密码:")
+>>>>>>> 5699990acb3b807b93684ef6563ad824764e8747
         flag = 3
         password1 = 'admin'
         while flag > 0:
@@ -157,7 +182,16 @@ class FileSystem:
         :return:
         """
         self.clear()
+<<<<<<< HEAD
+<<<<<<< HEAD
+        print()  # 空行
+        print("======用户登录======")
+=======
         print("=用户登录=")
+>>>>>>> remotes/origin/li
+=======
+        print("=用户登录=")
+>>>>>>> 5699990acb3b807b93684ef6563ad824764e8747
         password_file_inode_id = self._get_password_file_inode_id()
         if not password_file_inode_id:
             password_file_inode_id = self._init_root_user()
@@ -236,6 +270,13 @@ class FileSystem:
         password_list.append(User(username, password, self.user_counts))
         self.user_counts += 1
         self.write_back(password_inode, pickle.dumps(password_list))
+<<<<<<< HEAD
+<<<<<<< HEAD
+        password_inode.write_back(self.fp)  # 关键：写回 inode 元数据
+=======
+>>>>>>> remotes/origin/li
+=======
+>>>>>>> 5699990acb3b807b93684ef6563ad824764e8747
         return username, self.user_counts - 1
 
     def get_base_dir_inode_id(self):
@@ -386,8 +427,19 @@ class FileSystem:
         self.show()
 
     def show(self):
+<<<<<<< HEAD
+<<<<<<< HEAD
+        print()  # 新增：空行分隔，避免前面的方框
+        welcome_msg = f"Welcome, {self.current_user_name}!"
+        print(color(welcome_msg, "31", "107"))  # 红色字 + 米白色背景
+=======
         print("Welcome to the PFS")
         logo()
+>>>>>>> remotes/origin/li
+=======
+        print("Welcome to the PFS")
+        logo()
+>>>>>>> 5699990acb3b807b93684ef6563ad824764e8747
         self.sp.show_sp_info()
 
     def clear(self):
