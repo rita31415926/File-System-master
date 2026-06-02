@@ -208,16 +208,84 @@ def cp(fs: FileSystem, *args):
                 cd(fs, '/'.join(['..'] * cnt1))
                 return
 
-        cd(fs, '/'.join(['..'] * cnt1))
-        # 增加到现在的目录下
-        cd(fs, '/'.join(path_tgt.split('/')))
-        touch(fs, name)
-        pwd_cat_new = fs.load_pwd_obj()
-        new_inode_io = pwd_cat_new.son_files[name]
-        new_inode = fs.get_inode(inode_id=new_inode_io)
-        fs.write_back(new_inode, pickle.dumps(text_copy))
-        new_inode.write_back(fs.fp)
-        cd(fs, '/'.join(['..'] * cnt2))
+    # 保存原始路径（相对于根，去掉 base/）
+    original = fs.pwd()
+    # 转换为相对于根目录的路径（去掉开头的 "base/"）
+    if original.startswith('base/'):
+        rel_original = original[5:]   # 例如 "base/root" -> "root"
+    else:
+        rel_original = original
+    print(f"[DEBUG] 原始目录: {original}, 相对根路径: {rel_original}")
+
+    # 分离源路径
+    src_dir, src_name = os.path.split(path_src)
+    if not src_dir:
+        src_dir = '.'
+
+    # 切换到源目录
+    if not fs.chdir(src_dir):
+        print(f"无法切换到源目录: {src_dir}")
+        # 恢复原始目录
+        fs.chdir("~")
+        fs.chdir(rel_original)
+        return
+    print(f"[DEBUG] 已切换到源目录: {fs.pwd()}")
+
+    # 检查源文件
+    pwd_cat = fs.load_pwd_obj()
+    file_type = pwd_cat.is_exist_son_files(src_name)
+    if file_type == -1:
+        print(f"源文件不存在: {src_name}")
+        fs.chdir("~")
+        fs.chdir(rel_original)
+        return
+    if file_type != 0:
+        print(f"源路径不是普通文件: {src_name}")
+        fs.chdir("~")
+        fs.chdir(rel_original)
+        return
+
+    # 读取内容
+    inode_id = pwd_cat.son_files[src_name]
+    src_inode = fs.get_inode(inode_id)
+    ok, content = fs.load_files_block(src_inode)
+    if not ok:
+        print("无法读取源文件（权限不足）")
+        fs.chdir("~")
+        fs.chdir(rel_original)
+        return
+
+    # 回到原始目录（根 + 相对路径）
+    if not fs.chdir("~"):
+        print("无法回到根目录")
+        return
+    if not fs.chdir(rel_original):
+        print(f"无法回到原始目录: {rel_original}")
+        return
+    
+
+    # 切换到目标目录
+    if not fs.chdir(path_tgt):
+        print(f"目标目录不存在: {path_tgt}")
+        return
+    print(f"[DEBUG] 已切换到目标目录: {fs.pwd()}")
+
+    # 检查目标目录中是否已有同名文件
+    pwd_cat_tgt = fs.load_pwd_obj()
+    if pwd_cat_tgt.is_exist_son_files(src_name) != -1:
+        print(f"目标目录已存在同名文件: {src_name}")
+        fs.chdir("~")
+        fs.chdir(rel_original)
+        return
+
+    # 创建新文件并写入内容
+    new_inode = fs.get_new_inode(user_id=fs.current_user_id)
+    new_inode.target_type = 0
+    pwd_cat_tgt.add_new_file(src_name, new_inode.i_no)
+    fs.write_back(fs.pwd_inode, bytes(pwd_cat_tgt))
+    new_inode.write_back(fs.fp)
+    fs.write_back(new_inode, pickle.dumps(content))
+    new_inode.write_back(fs.fp)
 
 
 def mv(fs: FileSystem, *args):
