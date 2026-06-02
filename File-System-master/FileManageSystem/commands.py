@@ -161,18 +161,52 @@ def cd(fs: FileSystem, *args: str):
     else:
         fs.chdir(args[0])
 
+
 def cp(fs: FileSystem, *args):
-    import os, pickle
-    if args and args[0] == '-h':
-        print("cp src_path tgt_dir_path")
+    """
+    复制文件/目录参数-r
+    :param fs:
+    :param args:
+    :return:
+    """
+    if args[0] == '-h':
+        print("""
+        复制文件
+            cp xx/xx/src_filename xx/xx/tgt_dir
+            复制文件到其他目录
+            支持跨目录层级调用
+            仅支持复制文件
+        """)
         return
+
     if args[0] == '-r':
         path_src = args[1]
         path_tgt = args[2]
-        print("递归复制未实现")
     else:
         path_src = args[0]
         path_tgt = args[1]
+        name = path_src.split('/')[-1]  # 取出文件名
+        cnt1 = len(path_src.split('/')) - 1  # 第一个目录的深度
+        cnt2 = len(path_tgt.split('/'))  # 第二个目录的深度
+        text_copy = ""  # 文件内容
+        cd(fs, '/'.join(path_src.split('/')[:-1]))
+        pwd_cat = fs.load_pwd_obj()
+        flag = pwd_cat.is_exist_son_files(name)
+        if flag == -1:
+            print("{} 文件不存在".format(name))
+            cd(fs, '/'.join(['..'] * cnt1))
+            return
+        else:
+            if flag == FILE_TYPE:
+                inode_io = pwd_cat.son_files[name]
+                inode = fs.get_inode(inode_id=inode_io)
+                flag2, text = fs.load_files_block(inode)
+                if flag2:
+                    text_copy = text  # 传递内容
+            if flag == DIR_TYPE:
+                print("不能复制文件夹")
+                cd(fs, '/'.join(['..'] * cnt1))
+                return
 
     # 保存原始路径（相对于根，去掉 base/）
     original = fs.pwd()
@@ -253,10 +287,6 @@ def cp(fs: FileSystem, *args):
     fs.write_back(new_inode, pickle.dumps(content))
     new_inode.write_back(fs.fp)
 
-    # 恢复原始目录
-    fs.chdir("~")
-    fs.chdir(rel_original)
-    print(f"复制成功: {src_name} -> {path_tgt}")
 
 def mv(fs: FileSystem, *args):
     """
