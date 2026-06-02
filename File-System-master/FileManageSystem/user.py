@@ -1,10 +1,16 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 5699990acb3b807b93684ef6563ad824764e8747
 """
 author:Wenquan Yang
 time:2020/6/16 0:35
 """
+<<<<<<< HEAD
 >>>>>>> remotes/origin/li
+=======
+>>>>>>> 5699990acb3b807b93684ef6563ad824764e8747
 import hashlib
 
 

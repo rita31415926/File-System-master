@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # 状态栏颜色
 BAR_TIME_F = "33"
 BAR_TIME_B = "40"
@@ -22,6 +23,13 @@ LOGIN_LABEL_F = "32"
 
 
 
+=======
+"""
+author:Wenquan Yang
+time:2020/6/9 1:36
+content:配置文件
+"""
+>>>>>>> 5699990acb3b807b93684ef6563ad824764e8747
 
 BLOCK_SIZE = 512  # 磁盘块大小Bytes
 BLOCK_NUM = 2560  # 磁盘块总数量
@@ -54,6 +62,16 @@ INIT_DIRS = ['root', 'home', 'etc']
 
 VERSION = "V 1.2"
 
+<<<<<<< HEAD
+=======
+LOGO = """    
+    ____   ______ _____
+   / __ \ / ____// ___/
+  / /_/ // /_    \__ \\
+ / ____// __/   ___/ /
+/_/    /_/     /____/
+                       """
+>>>>>>> 5699990acb3b807b93684ef6563ad824764e8747
 
 # color
 FILE_COLOR_F = "37"  # 文件名前景色

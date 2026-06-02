@@ -1,13 +1,29 @@
+<<<<<<< HEAD
 
+=======
+"""
+author:Wenquan Yang
+time:2020/6/14 20:18
+intro:命令模块
+"""
+>>>>>>> 5699990acb3b807b93684ef6563ad824764e8747
 import pickle
 from threading import Thread
 from config import *
 from utils import check_auth
+<<<<<<< HEAD
 
 from utils import line
 from file_system import FileSystem
 from file_ui import TextEdit
 from utils import color
+=======
+from utils import color
+from utils import line
+from file_system import FileSystem
+from file_ui import TextEdit
+
+>>>>>>> 5699990acb3b807b93684ef6563ad824764e8747
 
 def useradd(fs: FileSystem, *args):
     """
@@ -602,6 +618,19 @@ def main(*args):
     :return:
     """
     print("""
+<<<<<<< HEAD
+=======
+    这是一个模拟的文件系统
+    fms.pfs用于模拟磁盘，会在系统运行的时候加载系统关闭时关闭
+    系统中的信息和用户文件都存放于fms.pfs中，系统运行时进行加载
+    基于最基本linux中的inode---dir_block---inode---data_block结构
+    包含基本的block有superblock，inode，datablock(dirblock,fileblock)
+    不同于linux中使用bitmap进行空间分配，本系统使用成组链接法进行分配
+    
+    支持多用户多级目录，以及用户访问权限划分
+    
+    支持的命令有 (通过cmd -h 查看使用 例如 (useradd -h,su -h,tree -h,))
+>>>>>>> 5699990acb3b807b93684ef6563ad824764e8747
         添加用户 useradd
         切换用户 su username
         当前路径 pwd

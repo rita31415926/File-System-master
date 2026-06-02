@@ -1,12 +1,18 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
+=======
+>>>>>>> 5699990acb3b807b93684ef6563ad824764e8747
 """
 author:Wenquan Yang
 time:2020/6/9 1:35
 intro:数据结构定义
 """
+<<<<<<< HEAD
 >>>>>>> remotes/origin/li
+=======
+>>>>>>> 5699990acb3b807b93684ef6563ad824764e8747
 
 import pickle
 import time
@@ -14,10 +20,14 @@ from config import *
 from utils import split_serializer
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 from utils import color
 =======
 
 >>>>>>> remotes/origin/li
+=======
+
+>>>>>>> 5699990acb3b807b93684ef6563ad824764e8747
 class Block:
 
     def __bytes__(self):
@@ -69,6 +79,7 @@ class SuperBlock(Block):
 
     def show_sp_info(self):
 <<<<<<< HEAD
+<<<<<<< HEAD
         inode_info = f"INODE使用情况：{self.inode_unused_cnt} / {self.inode_cnt}"
         block_info = f"DATABLOCK使用情况：{self.block_unused_cnt} / {self.block_cnt}"
         print(f"\33[31;107m{inode_info}\33[0m")
@@ -77,6 +88,10 @@ class SuperBlock(Block):
         print("INODE使用情况：", self.inode_unused_cnt, '/', self.inode_cnt)
         print("DATABLOCK使用情况：", self.block_unused_cnt, '/', self.block_cnt)
 >>>>>>> remotes/origin/li
+=======
+        print("INODE使用情况：", self.inode_unused_cnt, '/', self.inode_cnt)
+        print("DATABLOCK使用情况：", self.block_unused_cnt, '/', self.block_cnt)
+>>>>>>> 5699990acb3b807b93684ef6563ad824764e8747
 
     def write_back(self, fp):
         fp.seek(0)

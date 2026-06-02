@@ -1,11 +1,17 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 5699990acb3b807b93684ef6563ad824764e8747
 """
 author:Wenquan Yang
 time:2020/6/12 22:30
 intro: 文本编辑器可视化界面
 """
+<<<<<<< HEAD
 >>>>>>> remotes/origin/li
+=======
+>>>>>>> 5699990acb3b807b93684ef6563ad824764e8747
 import tkinter as tk
 from tkinter import scrolledtext
 
