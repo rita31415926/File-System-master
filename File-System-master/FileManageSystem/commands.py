@@ -599,20 +599,6 @@ def rm(fs: FileSystem, *args):
             else:
                 print("cannot delete directory/file .: Permission denied")
 
-def format(fs: FileSystem, *args):
-    """
-    格式化磁盘命令
-    用法：format
-    """
-    if args and args[0] == '-h':
-        print("""
-        格式化磁盘
-            将清除所有数据，恢复初始状态。
-            需要确认操作。
-        """)
-        return
-    fs.format()
-
 
 def main(*args):
     """
@@ -648,5 +634,4 @@ def main(*args):
         文件信息 stat filename/dirname
         系统信息 detail
         删除文件 rm [-r] filename/dirname
-        格式化磁盘 format
     """)
