@@ -228,7 +228,7 @@ def cp(fs: FileSystem, *args):
     if not fs.chdir(rel_original):
         print(f"无法回到原始目录: {rel_original}")
         return
-    print(f"[DEBUG] 已回到原始目录: {fs.pwd()}")
+    
 
     # 切换到目标目录
     if not fs.chdir(path_tgt):
